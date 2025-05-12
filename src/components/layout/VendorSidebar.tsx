@@ -53,8 +53,18 @@ export function VendorSidebar({ isOpen, setIsOpen }: VendorSidebarProps) {
         isOpen ? "translate-x-0" : "-translate-x-full"
       )}
     >
-      <div className="h-16 flex items-center justify-center border-b border-sidebar-border">
-        <h2 className="text-xl font-bold text-white">APU Food Court</h2>
+      <div className="h-20 flex items-center justify-center border-b border-sidebar-border p-4">
+        <div className="flex items-center gap-3">
+          <img 
+            src="/lovable-uploads/4585d636-531c-4004-a3ea-4266b244fb85.png" 
+            alt="APU Food Court Kiosk" 
+            className="h-10 w-auto"
+          />
+          <div className="text-white">
+            <h2 className="text-lg font-bold leading-tight">KIOSK</h2>
+            <p className="text-xs text-sidebar-foreground/70">APU Food Court</p>
+          </div>
+        </div>
       </div>
       
       <nav className="p-4 space-y-2">

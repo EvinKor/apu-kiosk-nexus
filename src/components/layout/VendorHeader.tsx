@@ -29,9 +29,19 @@ export function VendorHeader({ toggleSidebar }: VendorHeaderProps) {
             <Menu className="h-5 w-5" />
           </Button>
         )}
-        <h1 className="text-lg md:text-xl font-semibold text-vendor-darkblue">
-          {vendorName} Vendor Portal
-        </h1>
+        <div className="flex items-center gap-2">
+          <img 
+            src="/lovable-uploads/4585d636-531c-4004-a3ea-4266b244fb85.png" 
+            alt="APU Food Court Kiosk" 
+            className="h-10 w-auto"
+          />
+          <div className="flex flex-col">
+            <h1 className="text-lg md:text-xl font-semibold text-vendor-darkblue">
+              {vendorName} Vendor Portal
+            </h1>
+            <span className="text-xs text-gray-500">Asia Pacific University Food Court Kiosk</span>
+          </div>
+        </div>
       </div>
       
       <div className="flex items-center gap-2">
