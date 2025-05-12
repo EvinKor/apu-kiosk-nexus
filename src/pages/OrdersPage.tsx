@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Check, Clock, Search } from "lucide-react";
+import { Check, Clock, Search, Undo } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { toast } from "@/hooks/use-toast";
@@ -21,6 +21,7 @@ interface Order {
   items: OrderItem[];
   total: number;
   status: "pending" | "preparing" | "ready" | "completed";
+  previousStatus?: "pending" | "preparing" | "ready" | "completed";
   time: string;
   studentId?: string;
 }
@@ -94,7 +95,11 @@ const OrdersPage = () => {
   const updateOrderStatus = (orderId: string, newStatus: "pending" | "preparing" | "ready" | "completed") => {
     setOrders(orders.map(order => {
       if (order.id === orderId) {
-        return { ...order, status: newStatus };
+        return { 
+          ...order, 
+          previousStatus: order.status, // Store the previous status before updating
+          status: newStatus 
+        };
       }
       return order;
     }));
@@ -110,6 +115,36 @@ const OrdersPage = () => {
       description: statusMessages[newStatus] || "Status updated successfully",
       variant: "default",
     });
+  };
+  
+  const revertOrderStatus = (orderId: string) => {
+    const orderToRevert = orders.find(order => order.id === orderId);
+    
+    if (orderToRevert && orderToRevert.previousStatus) {
+      setOrders(orders.map(order => {
+        if (order.id === orderId) {
+          const { previousStatus } = order;
+          return { 
+            ...order, 
+            status: previousStatus,
+            previousStatus: undefined // Clear the previous status after reverting
+          };
+        }
+        return order;
+      }));
+      
+      toast({
+        title: `Order ${orderId} Reverted`,
+        description: `Order status reverted to ${orderToRevert.previousStatus}`,
+        variant: "default",
+      });
+    } else {
+      toast({
+        title: `Cannot Revert Order ${orderId}`,
+        description: "No previous status found for this order",
+        variant: "destructive",
+      });
+    }
   };
   
   const getActionButton = (order: Order) => {
@@ -147,6 +182,10 @@ const OrdersPage = () => {
       default:
         return null;
     }
+  };
+
+  const canRevert = (order: Order) => {
+    return order.previousStatus !== undefined;
   };
   
   return (
@@ -196,8 +235,18 @@ const OrdersPage = () => {
                       {order.status.charAt(0).toUpperCase() + order.status.slice(1)}
                     </Badge>
                   </div>
-                  <div className="flex items-center gap-4">
+                  <div className="flex items-center gap-2">
                     <span className="text-sm text-muted-foreground">{order.time}</span>
+                    {canRevert(order) && (
+                      <Button 
+                        size="sm" 
+                        variant="outline" 
+                        onClick={() => revertOrderStatus(order.id)}
+                        className="border-red-500 text-red-500 hover:bg-red-50"
+                      >
+                        <Undo className="mr-1 h-4 w-4" /> Revert
+                      </Button>
+                    )}
                     {getActionButton(order)}
                   </div>
                 </div>
