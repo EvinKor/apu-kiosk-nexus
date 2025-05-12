@@ -1,13 +1,41 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+
+import { VendorLayout } from "@/components/layout/VendorLayout";
+import { StatCards } from "@/components/dashboard/StatCards";
+import { OrdersSummary } from "@/components/dashboard/OrdersSummary";
+import { RecentOrders } from "@/components/dashboard/RecentOrders";
+import { SalesChart } from "@/components/dashboard/SalesChart";
 
 const Index = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-gray-600">Start building your amazing project here!</p>
+    <VendorLayout>
+      <div className="space-y-6">
+        <div className="flex items-center justify-between">
+          <h2 className="text-2xl font-bold tracking-tight">Dashboard</h2>
+          <p className="text-sm text-muted-foreground">
+            {new Date().toLocaleDateString("en-US", {
+              weekday: "long",
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            })}
+          </p>
+        </div>
+        
+        <StatCards />
+        
+        <OrdersSummary 
+          pending={5} 
+          preparing={3} 
+          ready={2} 
+          completed={14} 
+        />
+        
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <SalesChart />
+          <RecentOrders />
+        </div>
       </div>
-    </div>
+    </VendorLayout>
   );
 };
 
