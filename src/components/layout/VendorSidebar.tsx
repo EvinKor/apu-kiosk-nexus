@@ -56,7 +56,7 @@ export function VendorSidebar({ isOpen, setIsOpen }: VendorSidebarProps) {
       <div className="h-20 flex items-center justify-center border-b border-sidebar-border p-4">
         <div className="flex items-center gap-3">
           <img 
-            src="/lovable-uploads/4585d636-531c-4004-a3ea-4266b244fb85.png" 
+            src="/lovable-uploads/05e881a5-c9bd-46d4-a094-942741fad2bb.png" 
             alt="APU Food Court Kiosk" 
             className="h-10 w-auto"
           />
