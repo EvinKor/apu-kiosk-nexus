@@ -7,6 +7,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Check, Clock, Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
+import { toast } from "@/hooks/use-toast";
 
 interface OrderItem {
   name: string;
@@ -24,63 +25,62 @@ interface Order {
   studentId?: string;
 }
 
-const sampleOrders: Order[] = [
-  {
-    id: "#4523",
-    customerName: "John Smith",
-    studentId: "TP058734",
-    items: [
-      { name: "Nasi Lemak", quantity: 1, price: 8.50 },
-      { name: "Teh Tarik", quantity: 1, price: 3.00 }
-    ],
-    total: 11.50,
-    status: "pending",
-    time: "5 mins ago",
-  },
-  {
-    id: "#4522",
-    customerName: "Sarah Lee",
-    studentId: "TP045621",
-    items: [
-      { name: "Chicken Rice", quantity: 1, price: 9.00 },
-      { name: "Lime Juice", quantity: 1, price: 3.00 },
-      { name: "Curry Puff", quantity: 2, price: 2.00 }
-    ],
-    total: 16.00,
-    status: "preparing",
-    time: "12 mins ago",
-  },
-  {
-    id: "#4521",
-    customerName: "Ahmed Hassan",
-    studentId: "TP058123",
-    items: [
-      { name: "Mee Goreng", quantity: 1, price: 7.00 },
-      { name: "Ice Coffee", quantity: 1, price: 4.50 }
-    ],
-    total: 11.50,
-    status: "ready",
-    time: "18 mins ago",
-  },
-  {
-    id: "#4520",
-    customerName: "Grace Wong",
-    studentId: "TP059876",
-    items: [
-      { name: "Roti Canai", quantity: 2, price: 3.00 },
-      { name: "Teh Tarik", quantity: 1, price: 3.00 }
-    ],
-    total: 9.00,
-    status: "completed",
-    time: "32 mins ago",
-  },
-];
-
 const OrdersPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [activeTab, setActiveTab] = useState("all");
+  const [orders, setOrders] = useState<Order[]>([
+    {
+      id: "#4523",
+      customerName: "John Smith",
+      studentId: "TP058734",
+      items: [
+        { name: "Nasi Lemak", quantity: 1, price: 8.50 },
+        { name: "Teh Tarik", quantity: 1, price: 3.00 }
+      ],
+      total: 11.50,
+      status: "pending",
+      time: "5 mins ago",
+    },
+    {
+      id: "#4522",
+      customerName: "Sarah Lee",
+      studentId: "TP045621",
+      items: [
+        { name: "Chicken Rice", quantity: 1, price: 9.00 },
+        { name: "Lime Juice", quantity: 1, price: 3.00 },
+        { name: "Curry Puff", quantity: 2, price: 2.00 }
+      ],
+      total: 16.00,
+      status: "preparing",
+      time: "12 mins ago",
+    },
+    {
+      id: "#4521",
+      customerName: "Ahmed Hassan",
+      studentId: "TP058123",
+      items: [
+        { name: "Mee Goreng", quantity: 1, price: 7.00 },
+        { name: "Ice Coffee", quantity: 1, price: 4.50 }
+      ],
+      total: 11.50,
+      status: "ready",
+      time: "18 mins ago",
+    },
+    {
+      id: "#4520",
+      customerName: "Grace Wong",
+      studentId: "TP059876",
+      items: [
+        { name: "Roti Canai", quantity: 2, price: 3.00 },
+        { name: "Teh Tarik", quantity: 1, price: 3.00 }
+      ],
+      total: 9.00,
+      status: "completed",
+      time: "32 mins ago",
+    },
+  ]);
   
-  const filteredOrders = sampleOrders.filter(order => {
+  const filteredOrders = orders.filter(order => {
     const matchesSearch = 
       order.id.toLowerCase().includes(searchTerm.toLowerCase()) || 
       order.customerName.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -90,24 +90,57 @@ const OrdersPage = () => {
     
     return matchesSearch && matchesStatus;
   });
+
+  const updateOrderStatus = (orderId: string, newStatus: "pending" | "preparing" | "ready" | "completed") => {
+    setOrders(orders.map(order => {
+      if (order.id === orderId) {
+        return { ...order, status: newStatus };
+      }
+      return order;
+    }));
+    
+    const statusMessages = {
+      preparing: "Order is now being prepared",
+      ready: "Order is ready for pickup",
+      completed: "Order has been completed"
+    };
+    
+    toast({
+      title: `Order ${orderId} Updated`,
+      description: statusMessages[newStatus] || "Status updated successfully",
+      variant: "default",
+    });
+  };
   
-  const getActionButton = (status: string) => {
+  const getActionButton = (order: Order) => {
+    const { id, status } = order;
+    
     switch (status) {
       case "pending":
         return (
-          <Button size="sm">
+          <Button 
+            size="sm"
+            onClick={() => updateOrderStatus(id, "preparing")}
+          >
             <Clock className="mr-1 h-4 w-4" /> Start Preparing
           </Button>
         );
       case "preparing":
         return (
-          <Button size="sm">
+          <Button 
+            size="sm"
+            onClick={() => updateOrderStatus(id, "ready")}
+          >
             <Check className="mr-1 h-4 w-4" /> Mark as Ready
           </Button>
         );
       case "ready":
         return (
-          <Button size="sm" variant="outline">
+          <Button 
+            size="sm" 
+            variant="outline"
+            onClick={() => updateOrderStatus(id, "completed")}
+          >
             <Check className="mr-1 h-4 w-4" /> Mark as Completed
           </Button>
         );
@@ -165,7 +198,7 @@ const OrdersPage = () => {
                   </div>
                   <div className="flex items-center gap-4">
                     <span className="text-sm text-muted-foreground">{order.time}</span>
-                    {getActionButton(order.status)}
+                    {getActionButton(order)}
                   </div>
                 </div>
               </CardHeader>

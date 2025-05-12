@@ -76,8 +76,10 @@ export function RecentOrders() {
           </TableHeader>
           <TableBody>
             {recentOrders.map((order) => (
-              <TableRow key={order.id}>
-                <TableCell className="font-medium">{order.id}</TableCell>
+              <TableRow key={order.id} className="cursor-pointer hover:bg-muted/50">
+                <TableCell className="font-medium">
+                  <Link to={`/orders?id=${order.id}`}>{order.id}</Link>
+                </TableCell>
                 <TableCell>{order.items.join(", ")}</TableCell>
                 <TableCell>RM {order.total.toFixed(2)}</TableCell>
                 <TableCell>
