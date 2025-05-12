@@ -64,12 +64,14 @@ export default {
 					ring: 'hsl(var(--sidebar-ring))'
 				},
 				vendor: {
-					blue: '#1a73e8',
-					darkblue: '#1a3a6e',
-					gray: '#f5f5f7',
-					lightgray: '#fafafa',
-					orange: '#ff6b35',
-					red: '#d93025'
+					blue: 'hsl(var(--vendor-blue))',
+					darkblue: 'hsl(var(--vendor-darkblue))',
+					red: 'hsl(var(--vendor-red))',
+					green: 'hsl(var(--vendor-green))',
+					orange: 'hsl(var(--vendor-orange))',
+					yellow: 'hsl(var(--vendor-yellow))',
+					purple: 'hsl(var(--vendor-purple))',
+					lightgray: 'hsl(var(--vendor-lightgray))'
 				}
 			},
 			borderRadius: {
