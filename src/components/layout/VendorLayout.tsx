@@ -23,7 +23,7 @@ export function VendorLayout({ children }: VendorLayoutProps) {
         <VendorSidebar isOpen={sidebarOpen} setIsOpen={setSidebarOpen} />
         <main
           className={`flex-1 p-4 transition-all duration-200 bg-vendor-lightgray ${
-            isMobile ? "ml-0" : sidebarOpen ? "ml-64" : "ml-0"
+            sidebarOpen ? (isMobile ? "ml-0" : "ml-64") : "ml-0"
           }`}
         >
           {children}

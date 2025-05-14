@@ -11,6 +11,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Link } from "react-router-dom";
 
 interface VendorHeaderProps {
   toggleSidebar: () => void;
@@ -24,14 +25,12 @@ export function VendorHeader({ toggleSidebar }: VendorHeaderProps) {
   return (
     <header className="bg-white border-b border-gray-200 px-4 h-16 flex items-center justify-between">
       <div className="flex items-center gap-4">
-        {isMobile && (
-          <Button variant="outline" size="icon" onClick={toggleSidebar}>
-            <Menu className="h-5 w-5" />
-          </Button>
-        )}
+        <Button variant="outline" size="icon" onClick={toggleSidebar} className="flex md:flex">
+          <Menu className="h-5 w-5" />
+        </Button>
         <div className="flex items-center gap-2">
           <img 
-            src="/lovable-uploads/05e881a5-c9bd-46d4-a094-942741fad2bb.png" 
+            src="/lovable-uploads/5d9d537d-6aef-4f38-b011-5d7d1be5b913.png" 
             alt="APU Food Court Kiosk" 
             className="h-10 w-auto"
           />
@@ -86,7 +85,9 @@ export function VendorHeader({ toggleSidebar }: VendorHeaderProps) {
             <DropdownMenuItem>Profile</DropdownMenuItem>
             <DropdownMenuItem>Settings</DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Logout</DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <Link to="/login">Logout</Link>
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>

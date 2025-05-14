@@ -7,8 +7,10 @@ import {
   Clock,
   BarChart3,
   Settings,
+  ChevronLeft,
 } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const navItems = [
   {
@@ -45,18 +47,19 @@ interface VendorSidebarProps {
 
 export function VendorSidebar({ isOpen, setIsOpen }: VendorSidebarProps) {
   const location = useLocation();
+  const isMobile = useIsMobile();
   
   return (
     <div
       className={cn(
-        "fixed inset-y-0 left-0 z-50 w-64 bg-sidebar transform transition-transform duration-200 ease-in-out lg:translate-x-0 border-r border-sidebar-border",
+        "fixed inset-y-0 left-0 z-50 w-64 bg-sidebar transform transition-transform duration-200 ease-in-out border-r border-sidebar-border",
         isOpen ? "translate-x-0" : "-translate-x-full"
       )}
     >
-      <div className="h-20 flex items-center justify-center border-b border-sidebar-border p-4">
+      <div className="h-20 flex items-center justify-between border-b border-sidebar-border p-4">
         <div className="flex items-center gap-3">
           <img 
-            src="/lovable-uploads/05e881a5-c9bd-46d4-a094-942741fad2bb.png" 
+            src="/lovable-uploads/5d9d537d-6aef-4f38-b011-5d7d1be5b913.png" 
             alt="APU Food Court Kiosk" 
             className="h-10 w-auto"
           />
@@ -65,6 +68,17 @@ export function VendorSidebar({ isOpen, setIsOpen }: VendorSidebarProps) {
             <p className="text-xs text-sidebar-foreground/70">APU Food Court</p>
           </div>
         </div>
+        
+        {!isMobile && (
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            className="h-8 w-8 text-sidebar-foreground hover:bg-sidebar-accent"
+            onClick={() => setIsOpen(false)}
+          >
+            <ChevronLeft className="h-5 w-5" />
+          </Button>
+        )}
       </div>
       
       <nav className="p-4 space-y-2">
@@ -76,7 +90,7 @@ export function VendorSidebar({ isOpen, setIsOpen }: VendorSidebarProps) {
                 "w-full justify-start gap-3 text-sidebar-foreground hover:bg-sidebar-accent hover:text-white",
                 location.pathname === item.href && "bg-sidebar-accent"
               )}
-              onClick={() => setIsOpen(false)}
+              onClick={() => isMobile && setIsOpen(false)}
             >
               <item.icon className="h-5 w-5" />
               {item.title}
