@@ -18,6 +18,7 @@ import {
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -160,7 +161,12 @@ const MenuPage = () => {
   const handleAddSubmit = (data: z.infer<typeof menuItemSchema>) => {
     const newItem: MenuItem = {
       id: `${Date.now()}`, // Generate a unique ID
-      ...data
+      name: data.name,
+      description: data.description,
+      price: data.price,
+      category: data.category,
+      image: data.image,
+      available: data.available,
     };
     
     setMenuItems([...menuItems, newItem]);
@@ -176,7 +182,15 @@ const MenuPage = () => {
     if (!currentItem) return;
     
     setMenuItems(menuItems.map(item => 
-      item.id === currentItem.id ? { ...item, ...data } : item
+      item.id === currentItem.id ? { 
+        ...item, 
+        name: data.name,
+        description: data.description,
+        price: data.price,
+        category: data.category,
+        image: data.image,
+        available: data.available,
+      } : item
     ));
     
     setIsEditDialogOpen(false);
