@@ -8,6 +8,7 @@ import {
   BarChart3,
   Settings,
   ChevronLeft,
+  UserCog,
 } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -32,6 +33,11 @@ const navItems = [
     title: "Analytics",
     href: "/analytics",
     icon: BarChart3,
+  },
+  {
+    title: "Profile",
+    href: "/profile",
+    icon: UserCog,
   },
   {
     title: "Settings",
@@ -59,7 +65,7 @@ export function VendorSidebar({ isOpen, setIsOpen }: VendorSidebarProps) {
       <div className="h-20 flex items-center justify-between border-b border-sidebar-border p-4">
         <div className="flex items-center gap-3">
           <img 
-            src="/lovable-uploads/5d9d537d-6aef-4f38-b011-5d7d1be5b913.png" 
+            src="/lovable-uploads/5789c9cf-9c55-4187-b66c-97e584d75656.png" 
             alt="APU Food Court Kiosk" 
             className="h-10 w-auto"
           />

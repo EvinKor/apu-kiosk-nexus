@@ -30,7 +30,7 @@ export function VendorHeader({ toggleSidebar }: VendorHeaderProps) {
         </Button>
         <div className="flex items-center gap-2">
           <img 
-            src="/lovable-uploads/5d9d537d-6aef-4f38-b011-5d7d1be5b913.png" 
+            src="/lovable-uploads/5789c9cf-9c55-4187-b66c-97e584d75656.png" 
             alt="APU Food Court Kiosk" 
             className="h-10 w-auto"
           />
@@ -82,8 +82,12 @@ export function VendorHeader({ toggleSidebar }: VendorHeaderProps) {
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>My Account</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Profile</DropdownMenuItem>
-            <DropdownMenuItem>Settings</DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <Link to="/profile">Profile</Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <Link to="/settings">Settings</Link>
+            </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem asChild>
               <Link to="/login">Logout</Link>
