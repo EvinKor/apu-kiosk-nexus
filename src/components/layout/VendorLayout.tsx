@@ -3,8 +3,6 @@ import { useState } from "react";
 import { VendorHeader } from "./VendorHeader";
 import { VendorSidebar } from "./VendorSidebar";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { Button } from "@/components/ui/button";
-import { ChevronRight } from "lucide-react";
 
 interface VendorLayoutProps {
   children: React.ReactNode;
@@ -28,16 +26,6 @@ export function VendorLayout({ children }: VendorLayoutProps) {
             sidebarOpen ? (isMobile ? "ml-0" : "ml-64") : "ml-0"
           }`}
         >
-          {!sidebarOpen && !isMobile && (
-            <Button 
-              variant="outline" 
-              size="icon" 
-              onClick={toggleSidebar}
-              className="mb-4 bg-white"
-            >
-              <ChevronRight className="h-5 w-5" />
-            </Button>
-          )}
           {children}
         </main>
       </div>
